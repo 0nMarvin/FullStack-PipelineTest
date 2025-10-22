@@ -1,7 +1,0 @@
-language: node_js
-node_js:
-  - "22"
-
-script: echo "testing"
-
-install: skip
