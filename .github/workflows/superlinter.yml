@@ -10,7 +10,7 @@ on:
 
 # Permissões necessárias para deploy no GitHub Pages
 permissions:
-  contents: read
+  contents: write  # Mudado de 'read' para 'write'
   pages: write
   id-token: write
 
@@ -40,10 +40,10 @@ jobs:
         run: npm ci
 
       # 4. Executar testes
-      #- name: Run tests
-      #  run: npm test -- --passWithNoTests
-      #  env:
-      #    CI: true
+      - name: Run tests
+        run: npm test -- --passWithNoTests
+        env:
+          CI: true
 
       # 5. Build da aplicação
       - name: Build application
