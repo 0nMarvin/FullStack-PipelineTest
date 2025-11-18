@@ -8,13 +8,11 @@ on:
     branches:
       - main
 
-# Permissões necessárias para deploy no GitHub Pages
 permissions:
-  contents: write # Mudado de 'read' para 'write'
+  contents: write
   pages: write
   id-token: write
 
-# Permitir apenas um deploy por vez
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -26,13 +24,13 @@ jobs:
     steps:
       # 1. Checkout do código
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # 2. Configurar Node.js
+      # 2. Configurar Node.js (USAR VERSÃO 20 PARA EVITAR O ERRO webidl-conversions)
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "20"
           cache: "npm"
 
       # 3. Instalar dependências
@@ -41,7 +39,7 @@ jobs:
 
       # 4. Executar testes
       - name: Run tests
-        run: npm run test
+        run: npm run test -- --run
         env:
           CI: true
           VITE_OMDB_API_KEY: "chave_teste_falsa_ci"
@@ -49,6 +47,8 @@ jobs:
       # 5. Build da aplicação
       - name: Build application
         run: npm run build
+        env:
+          VITE_OMDB_API_KEY: ${{ secrets.VITE_OMDB_API_KEY }}
 
       # 6. Deploy para GitHub Pages
       - name: Deploy to GitHub Pages
