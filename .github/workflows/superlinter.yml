@@ -10,7 +10,7 @@ on:
 
 # Permissões necessárias para deploy no GitHub Pages
 permissions:
-  contents: write  # Mudado de 'read' para 'write'
+  contents: write # Mudado de 'read' para 'write'
   pages: write
   id-token: write
 
@@ -41,9 +41,10 @@ jobs:
 
       # 4. Executar testes
       - name: Run tests
-        run: npm test -- --passWithNoTests
+        run: npm run test
         env:
           CI: true
+          VITE_OMDB_API_KEY: "chave_teste_falsa_ci"
 
       # 5. Build da aplicação
       - name: Build application
